@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GetMeWet Web</title>
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+    <h1>TodayPage!</h1>
+    <form class="form-horizontal" th:action="@{/logout}" method="post">
+        <div class="col-sm-2" style="padding-top: 25px;">
+          <span sec:authorize="isAuthenticated()">
+              <input type="submit" value="Sign Out"/>
+           </span>
+        </div>
+    </form>
+</body>
+</html>

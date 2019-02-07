@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class GetMeWetApplication {
+public class GetMeWetAPIApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(GetMeWetApplication.class, args);
+        SpringApplication.run(GetMeWetAPIApplication.class, args);
     }
 
 }

@@ -43,13 +43,20 @@ public class APIUser {
     }
 
     @PostMapping(value = "/login")
-    public login(){
-
+    public void login(){
+        return;
     }
 
     @PostMapping(value = "/register")
-    public login(){
-
+    public ResponseEntity<String> register(@RequestBody User user){
+        System.out.println(user);
+        User us = userService.findByUsername(user.getUsername());
+        if (us != null) {
+            // Already exists
+            return new ResponseEntity<String>("Error when registering user. Please try again. Username may be taken, password invalid, etc.", HttpStatus.NOT_MODIFIED);
+        }
+        userService.saveUser(user);
+        return new ResponseEntity<String>("User " + us.getUsername() + " created successfully!", HttpStatus.CREATED);
     }
 
 }

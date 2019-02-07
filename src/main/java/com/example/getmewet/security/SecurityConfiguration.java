@@ -1,5 +1,6 @@
-package com.example.getmewet.configurations;
+package com.example.getmewet.security;
 
+import com.example.getmewet.util.CustomAccessDeniedHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -7,19 +8,34 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 
 import javax.sql.DataSource;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Autowired
+    private CustomAccessDeniedHandler accessDeniedHandler;
+
+    @Autowired
+    private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+
+    @Autowired
+    private SuccessHandler successHandler;
+
+    private SimpleUrlAuthenticationFailureHandler failureHandler = new SimpleUrlAuthenticationFailureHandler();;
+
 
     @Autowired
     private DataSource dataSource;
@@ -35,33 +51,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity
                 .csrf().disable()
                 .exceptionHandling()
+                .accessDeniedHandler(accessDeniedHandler)
                 .authenticationEntryPoint(restAuthenticationEntryPoint)
                 .and()
                 .authorizeRequests()
                 .antMatchers( "/api/user/**", "api/plant/**", "api/status/**", "api/day/**").authenticated()
-                .antMatchers("/api/register").hasAuthority("ADMIN")
+                //.antMatchers("/api/register").hasAuthority("ADMIN")
                 .and()
                 .formLogin()
                 .successHandler(successHandler)
                 .failureHandler(failureHandler)
                 .and()
                 .logout();
-
-        httpSecurity
-                .authorizeRequests().antMatchers("/", "/register").permitAll()
-                // TODO remove API and Register above!
-                // TODO enable when not remaking db every time
-                //.antMatchers("/reqister", "/api/register").hasAuthority("ADMIN")
-                .anyRequest().authenticated().and().csrf().disable().formLogin()
-                .loginPage("/login").permitAll()
-                .defaultSuccessUrl("/today")
-                .and()
-                .logout().permitAll()
-                .logoutSuccessUrl("/").and().exceptionHandling()
-                .accessDeniedPage("/access-denied");
-
-        httpSecurity.csrf().disable();
-        httpSecurity.headers().frameOptions().disable();
     }
 
 

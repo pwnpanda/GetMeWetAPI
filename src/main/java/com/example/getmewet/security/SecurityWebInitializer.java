@@ -1,4 +1,4 @@
-package com.example.getmewet.configurations;
+package com.example.getmewet.security;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

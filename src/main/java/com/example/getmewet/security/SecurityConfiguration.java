@@ -4,8 +4,10 @@ import com.example.getmewet.util.CustomAccessDeniedHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,12 +20,15 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+@ComponentScan("com.example.getmewet.security")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 
     @Autowired
     private CustomAccessDeniedHandler accessDeniedHandler;
@@ -55,10 +60,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(restAuthenticationEntryPoint)
                 .and()
                 .authorizeRequests()
-                .antMatchers( "/api/user/**", "api/plant/**", "api/status/**", "api/day/**").authenticated()
+                .antMatchers( "/api/user/**", "/api/plant/**", "/api/status/**", "/api/day/**").authenticated()
                 //.antMatchers("/api/register").hasAuthority("ADMIN")
                 .and()
-                .formLogin()
+                .formLogin().loginProcessingUrl("/api/login")
                 .successHandler(successHandler)
                 .failureHandler(failureHandler)
                 .and()

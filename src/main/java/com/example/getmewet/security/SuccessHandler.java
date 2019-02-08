@@ -33,6 +33,7 @@ public class SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
             return;
         }
         String targetUrlParam = getTargetUrlParameter();
+        System.out.println(targetUrlParam);
         if (isAlwaysUseDefaultTargetUrl()
                 || (targetUrlParam != null
                 && StringUtils.hasText(request.getParameter(targetUrlParam)))) {

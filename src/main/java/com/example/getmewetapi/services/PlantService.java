@@ -1,6 +1,8 @@
 package com.example.getmewetapi.services;
 
 import com.example.getmewetapi.models.Plant;
+import com.example.getmewetapi.repositories.PlantRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
@@ -12,6 +14,8 @@ public class PlantService {
 
     private static final AtomicInteger counter = new AtomicInteger();
 
+    private PlantRepository plantRepo;
+
     private static List<Plant> plants;
 
     /*
@@ -20,36 +24,34 @@ public class PlantService {
     }*/
 
 
-    public List<Plant> getAllBy() {
-        return plants;
+    @Autowired
+    public PlantService(PlantRepository plantRepo){
+        this.plantRepo = plantRepo;
+    }
+
+    public List<Plant> getAll() {
+        return plantRepo.findAll();
     }
 
     public Plant findById(int id){
-        for (Plant plant: plants){
-            if (plant.getId() == id){
-                return plant;
-            }
-        }
-        return null;
+        return plantRepo.findById(id);
     }
 
     public Plant findByName(String name){
-        for (Plant plant: plants){
-            if (plant.getName() == name){
-                return plant;
-            }
-        }
-        return null;
+        return plantRepo.findByName(name);
     }
 
     public void createPlant(Plant plant){
         plant.setId(counter.incrementAndGet());
         plants.add(plant);
+        System.out.println("Added plant " + plant);
     }
 
     public void updatePlant(Plant plant){
-        int index = plants.indexOf(plant);
+        System.out.println("Updating plant plant " + findById(plant.getId()));
+        int index = plants.indexOf(findById(plant.getId()));
         plants.set(index, plant);
+        System.out.println("Updated plant to " + plant);
     }
 
     public void deletePlantById(int id){
@@ -59,10 +61,6 @@ public class PlantService {
                 iterator.remove();
             }
         }
-    }
-
-    boolean existsPlantById(int id){
-        return findById(id) != null;
     }
 
     /*

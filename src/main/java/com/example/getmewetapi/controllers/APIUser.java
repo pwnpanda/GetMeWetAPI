@@ -58,6 +58,8 @@ public class APIUser {
         return new ResponseEntity<MyUser>(user, HttpStatus.OK);
     }
 
+    // ------------------------------------ POST ------------------------------------------
+
     @PostMapping(value = "/register")
     public ResponseEntity<?> register(@RequestBody MyUser user){
         System.out.println(user);

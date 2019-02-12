@@ -1,16 +1,11 @@
 package com.example.getmewetapi.repositories;
 
 import com.example.getmewetapi.models.Plant;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository("plantRepository")
-public interface PlantRepository extends CrudRepository<Plant, Integer> {
-    List<Plant> getAllBy();
+public interface PlantRepository extends JpaRepository<Plant, Integer> {
     Plant findById(int id);
     Plant findByName(String name);
-    void deletePlantById(int id);
-    boolean existsPlantById(int id);
 }

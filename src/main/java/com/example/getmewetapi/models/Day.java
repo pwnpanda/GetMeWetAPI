@@ -19,7 +19,7 @@ public class Day implements Serializable {
     @Column(name = "day_id", unique = true, nullable = false)
     private int id;
 
-    
+
     private final Date date;
     private final Integer day;
     private final Integer month;

@@ -129,6 +129,9 @@ public class APIPlantStatus {
         }
         return new ResponseEntity<Boolean>(status, HttpStatus.OK);
     }
+
+    // ------------------------------------ PUT ------------------------------------------
+
     // Change status of plant today
     // TODO FIX!
     @RequestMapping("/status/{id}/{status}", method = RequestMethod.PUT)
@@ -141,5 +144,8 @@ public class APIPlantStatus {
         }
         return new ResponseEntity<Boolean>(success, HttpStatus.OK);
     }
+
+    // ------------------------------------ POST ------------------------------------------
+
 }
 */

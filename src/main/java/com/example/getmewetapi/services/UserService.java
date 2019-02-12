@@ -16,8 +16,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
-import static java.util.Collections.emptyList;
-
 @Service("UserService")
 public class UserService implements UserDetailsService {
 

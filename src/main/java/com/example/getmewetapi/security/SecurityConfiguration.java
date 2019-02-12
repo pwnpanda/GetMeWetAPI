@@ -69,30 +69,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .successHandler(successHandler)
                 .failureHandler(failureHandler)
                 .and()
-                .logout();;
-
-        /*httpSecurity
-                .csrf().disable()
-                .exceptionHandling()
-                .accessDeniedHandler(accessDeniedHandler)
-                .authenticationEntryPoint(restAuthenticationEntryPoint)
-                .and()
-                .authorizeRequests()
-                .antMatchers( "/api/user/**", "/api/plant/**", "/api/status/**", "/api/day/**").authenticated()
-                .and()
-                .formLogin().loginProcessingUrl("/api/login")
-                .successHandler(successHandler)
-                .failureHandler(failureHandler)
-                .and()
-                .logout();*/
+                .logout();
     }
-
-/*
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
-    }
-*/
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
@@ -104,12 +82,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .dataSource(dataSource)
                 .passwordEncoder(bCryptPasswordEncoder);
     }
-    /*
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
-    }
-*/
 }

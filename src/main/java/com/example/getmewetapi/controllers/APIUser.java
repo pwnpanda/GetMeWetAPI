@@ -58,21 +58,6 @@ public class APIUser {
         return new ResponseEntity<MyUser>(user, HttpStatus.OK);
     }
 
-    /*
-    @PostMapping(value = "/login")
-    public ResponseEntity login(@RequestBody User user){
-        User localUser = userService.findByUsername(user.getUsername());
-        ResponseEntity error = new ResponseEntity("Invalid credentials!", HttpStatus.UNAUTHORIZED);
-        System.out.println("localUser PW: " +  localUser.getPassword() + " LoginUser PW: " +  user.getPassword());
-        if (localUser == null){
-            return error;
-        } else if( localUser.getPassword() == user.getPassword()) {
-            return new ResponseEntity("User " + user.getUsername() + " logged in!", HttpStatus.OK);
-        } else{
-            return error;
-        }
-    }*/
-
     @PostMapping(value = "/register")
     public ResponseEntity<?> register(@RequestBody MyUser user){
         System.out.println(user);

@@ -82,4 +82,9 @@ public class Status implements Serializable {
     public int hashCode() {
         return (getSid() != null ? getSid().hashCode() : 0);
     }
+
+    @Override
+    public String toString() {
+        return "Status  is Watered=" + isWet + " for " + getPlant() + " on " + getDay();
+    }
 }

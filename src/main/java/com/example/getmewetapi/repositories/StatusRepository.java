@@ -1,15 +1,11 @@
-/*package com.example.getmewet.repositories;
+package com.example.getmewetapi.repositories;
 
-import com.example.getmewet.models.Plant;
-import com.example.getmewet.models.Status;
-import org.springframework.data.repository.CrudRepository;
+import com.example.getmewetapi.models.Status;
+import com.example.getmewetapi.models.StatusAssignmentKey;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.sql.Date;
-import java.util.List;
 
-public interface StatusService extends CrudRepository<Status, Integer> {
-    List<Plant> plantsWetOnDay(Date date);
-    List<Date> dayPlantWasWet(Plant plant);
-    boolean wetStatusOnDay(Date date, Plant plant);
+
+public interface StatusRepository extends JpaRepository<Status, Integer> {
+    Status findBySid(StatusAssignmentKey sid);
 }
-*/

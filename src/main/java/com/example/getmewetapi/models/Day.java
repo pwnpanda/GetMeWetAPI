@@ -4,9 +4,10 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -20,18 +21,20 @@ public class Day implements Serializable {
     private int id;
 
 
-    private final Date date;
+    private final LocalDate date;
+    private final YearMonth mnt;
     private final Integer day;
     private final Integer month;
     private final Integer year;
     @ElementCollection
-    private Set<Status> statuses = new HashSet<Status>(0);
+    private List<Status> statuses = new ArrayList<Status>(0);
 
-    public Day(Date date, Set<Status> statuses){
+    public Day(LocalDate date, List<Status> statuses){
         this.date = date;
-        this.day = date.toLocalDate().getDayOfMonth();
-        this.month = date.toLocalDate().getMonthValue();
-        this.year = date.toLocalDate().getYear();
+        this.mnt = YearMonth.from(date);
+        this.day = date.getDayOfMonth();
+        this.month = date.getMonthValue();
+        this.year = date.getYear();
         this.statuses = statuses;
     }
 
@@ -44,20 +47,22 @@ public class Day implements Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "day_id", targetEntity = Status.class)
-    public Set<Status> getStatuses() {
+    public List<Status> getStatuses() {
         return statuses;
     }
 
-    public void setStatuses(Set<Status> statuses) {
+    public void setStatuses(List<Status> statuses) {
         this.statuses = statuses;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
+    public YearMonth getMnt() { return mnt; }
+
     public String getWeekDay() {
-        return date.toLocalDate().getDayOfWeek().toString();
+        return date.getDayOfWeek().toString();
     }
 
     public int getDayofMonth() {

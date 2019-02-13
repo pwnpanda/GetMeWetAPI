@@ -4,8 +4,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -23,9 +23,9 @@ public class Plant implements Serializable {
     private String picture;
     private String note;
     @ElementCollection
-    private Set<Status> statuses = new HashSet<Status>(0);
+    private List<Status> statuses = new ArrayList<Status>(0);
 
-    public Plant(String name, String picture, Set<Status> statuses){
+    public Plant(String name, String picture, List<Status> statuses){
         this.name = name;
         this.picture = picture;
         this.statuses = statuses;
@@ -63,11 +63,11 @@ public class Plant implements Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "plant_id",targetEntity = Status.class ,cascade=CascadeType.ALL)
-    public Set<Status> getStatuses() {
+    public List<Status> getStatuses() {
         return statuses;
     }
 
-    public void setStatuses(Set<Status> statuses) {
+    public void setStatuses(List<Status> statuses) {
         this.statuses = statuses;
     }
 
@@ -77,7 +77,7 @@ public class Plant implements Serializable {
 
     @Override
     public String toString() {
-        return "Plant name: " + this.name + ", Note: " + this.note;
+        return "[ID: "+ id + "]Plant name: " + this.name + ", Note: " + this.note;
     }
 
     @Override

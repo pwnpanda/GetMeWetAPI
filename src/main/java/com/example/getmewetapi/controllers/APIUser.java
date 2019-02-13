@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 public class APIUser {
 
     @Autowired
@@ -25,36 +25,37 @@ public class APIUser {
 
     public static final Logger logger = LoggerFactory.getLogger(APIUser.class);
 
-    @GetMapping(value = "/user/all")
+    @GetMapping(value = "/all")
     public ResponseEntity<List<MyUser>> listAllUsers(){
         logger.info("Get all users from API!");
         List<MyUser> users = userService.findAll();
         if (users.isEmpty()){
+            logger.debug("No users found!");
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<List<MyUser>>(users, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/user/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<MyUser> getUserId(@PathVariable String id){
         logger.info("Get user with id " + id);
         MyUser user;
         try {
-            System.out.println("Find by int!");
+            logger.debug("Find by int!");
             int id_l = Integer.parseInt(id);
             user = userService.findById(id_l);
-            System.out.println("Found user int: " + user);
+            logger.debug("Found user int: " + user);
         } catch (Exception e){
-            System.out.println("Find by string!");
+            logger.debug("Find by string!");
             user = userService.findByUsername(id);
-            System.out.println("Found user str: " + user);
+            logger.debug("Found user str: " + user);
 
         }
         if (user == null){
-            System.out.println("No user!");
+            logger.debug("No user!");
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
-        System.out.println(user);
+        logger.debug("User " + user);
         return new ResponseEntity<MyUser>(user, HttpStatus.OK);
     }
 
@@ -62,15 +63,19 @@ public class APIUser {
 
     @PostMapping(value = "/register")
     public ResponseEntity<?> register(@RequestBody MyUser user){
-        System.out.println(user);
+        logger.debug("User " + user);
         MyUser us = userService.findByUsername(user.getUsername());
         if (us != null) {
             // Already exists
+            logger.debug("User already exists! User " + user);
             return new ResponseEntity<String>("Error when registering user. Please try again. Username may be taken, password invalid, etc.", HttpStatus.NOT_MODIFIED);
         }
         user.setPassword(pwenc.encode(user.getPassword()));
         userService.saveUser(user);
+        logger.debug("User created " + user);
         return new ResponseEntity<MyUser>(user, HttpStatus.CREATED);
     }
+
+
 
 }

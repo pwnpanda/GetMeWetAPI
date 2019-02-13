@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-class StatusAssignmentKey implements Serializable {
+public class StatusAssignmentKey implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Plant plant;

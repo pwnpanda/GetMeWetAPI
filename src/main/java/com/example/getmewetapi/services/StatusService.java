@@ -21,7 +21,7 @@ public class StatusService {
 
     public static final Logger logger = LoggerFactory.getLogger(StatusService.class);
 
-    private static final ZoneId zone = ZoneId.of("JST");
+    private static final ZoneId zone = ZoneId.of("Asia/Tokyo");
     //If norway change to Europe/Oslo
 
     @Autowired
@@ -29,19 +29,19 @@ public class StatusService {
     @Autowired
     DayService calendar;
 
-    private StatusRepository statusRepo;
+    private StatusRepository statusRepository;
 
     @Autowired
-    public StatusService(StatusRepository statusRepo){
-        this.statusRepo = statusRepo;
+    public StatusService(StatusRepository statusRepository){
+        this.statusRepository = statusRepository;
     }
 
     public List<Status> getAll() {
-        return statusRepo.findAll();
+        return statusRepository.findAll();
     }
 
     public Status getStatusBySid(StatusAssignmentKey sid){
-        return statusRepo.findBySid(sid);
+        return statusRepository.findBySid(sid);
     }
 
     public List<Status> getStatusByPlantId(String id){
@@ -117,9 +117,9 @@ public class StatusService {
 
     public void updateStatus(Status status){
         logger.debug("Updating status " + status.getSid());
-        int index = getAll().indexOf(statusRepo.findBySid(status.getSid()));
+        int index = getAll().indexOf(statusRepository.findBySid(status.getSid()));
         if (index != -1){
-            statusRepo.save(status);
+            statusRepository.save(status);
             logger.debug("Updated status to " + status);
             return;
         }

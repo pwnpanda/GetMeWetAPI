@@ -15,9 +15,9 @@ import java.util.List;
 @Service("DayService")
 public class DayService {
 
-    private DayRepository dayRepository;
     public static final Logger logger = LoggerFactory.getLogger(DayService.class);
 
+    private DayRepository dayRepository;
 
     @Autowired
     public DayService(DayRepository dayRepository){

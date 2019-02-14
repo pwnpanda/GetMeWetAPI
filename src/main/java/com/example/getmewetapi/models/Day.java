@@ -26,16 +26,16 @@ public class Day implements Serializable {
     private final Integer day;
     private final Integer month;
     private final Integer year;
+
     @ElementCollection
     private List<Status> statuses = new ArrayList<Status>(0);
 
-    public Day(LocalDate date, List<Status> statuses){
+    public Day(LocalDate date){
         this.date = date;
         this.mnt = YearMonth.from(date);
         this.day = date.getDayOfMonth();
         this.month = date.getMonthValue();
         this.year = date.getYear();
-        this.statuses = statuses;
     }
 
     public int getId() {
@@ -79,6 +79,7 @@ public class Day implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("[ID: {}] Day: {} Month: {} Year: {}", id, date, month, year);
+        String tmp ="[ID: "+id+"] Day: "+date+" Month: "+month+" Year: "+year;
+        return tmp;
     }
 }

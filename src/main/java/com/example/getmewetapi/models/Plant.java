@@ -25,10 +25,9 @@ public class Plant implements Serializable {
     @ElementCollection
     private List<Status> statuses = new ArrayList<Status>(0);
 
-    public Plant(String name, String picture, List<Status> statuses){
+    public Plant(String name, String picture){
         this.name = name;
         this.picture = picture;
-        this.statuses = statuses;
         note = "";
     }
 

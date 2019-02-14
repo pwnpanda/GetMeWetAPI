@@ -70,7 +70,6 @@ public class APIUser {
             logger.debug("User already exists! User " + user);
             return new ResponseEntity<String>("Error when registering user. Please try again. Username may be taken, password invalid, etc.", HttpStatus.NOT_MODIFIED);
         }
-        user.setPassword(pwenc.encode(user.getPassword()));
         userService.saveUser(user);
         logger.debug("User created " + user);
         return new ResponseEntity<MyUser>(user, HttpStatus.CREATED);

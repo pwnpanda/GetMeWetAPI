@@ -76,7 +76,9 @@ public class DayService {
     }
 
     public void createDay(Day day){
-        int index = getAll().indexOf(getDayByDate(day.getDate()));
+        // TODO Activate after populating db
+        //int index = getAll().indexOf(getDayByDate(day.getDate()));
+        int index = -1;
         if (index == -1) {
             dayRepository.save(day);
             logger.debug("Added day " + day);

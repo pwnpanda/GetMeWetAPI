@@ -1,6 +1,11 @@
 package com.example.getmewetapi;
 
+import com.example.getmewetapi.models.Day;
 import com.example.getmewetapi.models.MyUser;
+import com.example.getmewetapi.models.Plant;
+import com.example.getmewetapi.services.DayService;
+import com.example.getmewetapi.services.PlantService;
+import com.example.getmewetapi.services.StatusService;
 import com.example.getmewetapi.services.UserService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,18 +15,20 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.time.LocalDate;
+
 @SpringBootApplication
 @EntityScan("com.example.getmewetapi.*")
 public class GetMeWetAPIApplication {
 
     @Autowired
     UserService userService;
-    /*@Autowired
+    /**/@Autowired
     DayService calendar;
     @Autowired
     PlantService plantService;
     @Autowired
-    StatusService statusService;*/
+    StatusService statusService;/**/
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -46,7 +53,7 @@ public class GetMeWetAPIApplication {
             user.setPassword("notAdmin");
             userService.saveUser(user);
 
-            /*// ------------------- Dates ----------------------
+            /**/// ------------------- Dates ----------------------
             LocalDate start = LocalDate.now();
             LocalDate end = start.plusYears(5);
             while (start.isBefore(end)){
@@ -60,7 +67,7 @@ public class GetMeWetAPIApplication {
             plant = new Plant("test2","---");
             plantService.createPlant(plant);
             //------------------- Status ----------------------
-            */
+            /**/
         };
     }
 }

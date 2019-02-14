@@ -51,7 +51,9 @@ public class PlantService {
     }
 
     public void createPlant(Plant plant){
-        int index = getAll().indexOf(findById(plant.getId()));
+        //Activate after populating only TODO
+        //int index = getAll().indexOf(findById(plant.getId()));
+        int index = -1;
         if (index == -1) {
             plantRepo.save(plant);
             logger.debug("Added plant " + plant);

@@ -36,7 +36,7 @@ public class APIStatus {
     // ------------------------- Get status by plant ----------------------------------------------------
 
     // Get status for one plant for all days
-    @GetMapping("/{id}")
+    @GetMapping("/plant/{id}")
     public ResponseEntity<?> getPlantAll(@PathVariable("id") String plant_id) {
         logger.debug("Get status for plant with id {}", plant_id);
         List<Status> status = getStatus.getStatusByPlantId(plant_id);
@@ -49,8 +49,8 @@ public class APIStatus {
     }
 
     // Get status of plant for today
-    @GetMapping("/status/{id}")
-    public ResponseEntity<?> getCurrentStatus(@RequestParam("id") String plant_id) {
+    @GetMapping("/today/{id}")
+    public ResponseEntity<?> getCurrentStatus(@PathVariable("id") String plant_id) {
         logger.info("Get today's status for plant {}", plant_id);
         Status status = getStatus.getPlantStatus(plant_id);
         if (status == null){
@@ -62,8 +62,8 @@ public class APIStatus {
     }
 
     // Get status of plant for current month
-    @GetMapping("/status/month/{id}")
-    public ResponseEntity<?> getPlantMonth(@RequestParam("id") String plant_id) {
+    @GetMapping("/month/{id}")
+    public ResponseEntity<?> getPlantMonth(@PathVariable("id") String plant_id) {
         logger.info("Get monthly status for plant {}", plant_id);
         List<Status> status = getStatus.getMonthlyPlantStatus(plant_id);
         if (status.isEmpty()){
@@ -79,7 +79,7 @@ public class APIStatus {
     // Get status for all plants for given day
     // Require date format: "2016-08-16"
     @GetMapping("/day/{date}")
-    public ResponseEntity<?> getStatusDay(@RequestParam("date") String date) {
+    public ResponseEntity<?> getStatusDay(@PathVariable("date") String date) {
         logger.info("Get data for all plants on " + date);
         List<Status> statuses = getStatus.getDay(date);
         if (statuses.isEmpty()){
@@ -109,7 +109,7 @@ public class APIStatus {
     // ------------------------------------ PUT ------------------------------------------
 
     // Change WateringStatus (isWet) of plant today
-    @PutMapping("/status/update")
+    @PutMapping("/update")
     public ResponseEntity<?> changeStatus(@RequestBody Status status){
         logger.info("Set status of plant {} to {} for day {}", status.getPlant(), status.isWet(), status.getDay());
         Status test = getStatus.getStatusBySid(status.getSid());

@@ -43,9 +43,13 @@ public class UserService implements UserDetailsService {
 
     public void saveUser(MyUser user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        System.out.print("1");
         Role userRole = roleRepository.findByRole("ADMIN");
+        System.out.print("2");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        System.out.print("3");
         userRepo.save(user);
+        System.out.print("4");
     }
 
     public List<MyUser> findAll(){

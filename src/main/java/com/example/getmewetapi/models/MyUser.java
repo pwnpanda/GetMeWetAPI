@@ -30,7 +30,7 @@ public class MyUser {
     @Length(min = 5, message = "*Your password must have at least 5 characters")
     @NotEmpty(message = "*Please provide your password")
     private String password;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
@@ -62,8 +62,8 @@ public class MyUser {
     }
 
     // If Role exploration is an issue, disable by uncommenting!
-    //@JsonIgnore
-    //@JsonProperty(value = "roles")
+    @JsonIgnore
+    @JsonProperty(value = "roles")
     public Set<Role> getRoles() {
         return roles;
     }

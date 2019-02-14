@@ -12,6 +12,8 @@ public class StatusAssignmentKey implements Serializable {
     private Plant plant;
     private Day day;
 
+    public StatusAssignmentKey(){}
+
     @ManyToOne
     public Plant getPlant() {
         return plant;

@@ -67,6 +67,7 @@ public class GetMeWetAPIApplication {
             plant = new Plant("test2","---");
             plantService.createPlant(plant);
             //------------------- Status ----------------------
+
             /**/
         };
     }
